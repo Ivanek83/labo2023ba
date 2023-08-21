@@ -63,3 +63,8 @@ fwrite(dapply[, list(numero_de_cliente, Predicted)],
         file = "./exp/KA2001/K101_014.csv",
         sep = ","
 )
+
+
+entrega <- data.table(list(numero_de_cliente, Predicted))
+#entrega[, .N, Predicted]
+entrega
