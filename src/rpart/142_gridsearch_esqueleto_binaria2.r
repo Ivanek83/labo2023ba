@@ -145,7 +145,7 @@ cat(
 for (vmax_depth in c(6, 7, 8, 9, 10)) {
   for (vmin_split in c(400, 450, 500, 550, 600, 650, 700, 750, 800)) {
     for (min_bucket in c(100, 150, 200, 250, 300, 350, 400)) {
-      for (cp in seq(-1, 0.1, by = 0.1)) {
+      for (cp in seq(-1, 0, by = 0.2)) {
         
         print("Iteracion")
         print(vmax_depth)
