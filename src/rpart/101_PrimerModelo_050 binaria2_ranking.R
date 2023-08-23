@@ -1,0 +1,89 @@
+# Arbol elemental con libreria  rpart
+# Debe tener instaladas las librerias  data.table  ,  rpart  y  rpart.plot
+
+# cargo las librerias que necesito
+require("data.table")
+require("rpart")
+require("rpart.plot")
+
+# Aqui se debe poner la carpeta de la materia de SU computadora local
+setwd("~/buckets/b1/") # Establezco el Working Directory
+
+# cargo el dataset
+dataset <- fread("./datasets/dataset_pequeno.csv")
+
+
+# chequeo la cant de cada variable
+dataset[clase_ternaria == "BAJA+1", .N]
+dataset[clase_ternaria == "BAJA+2", .N]
+dataset[clase_ternaria == "CONTINUA", .N]
+
+# Modifico la columna clase_ternaria para que sea binaria y le cambio el nombre: 
+setnames(dataset, old = "clase_ternaria", new = "clase_binaria")
+dataset[clase_binaria == "BAJA+1", clase_binaria := "neg"]
+dataset[clase_binaria == "CONTINUA", clase_binaria := "neg"]
+dataset[clase_binaria == "BAJA+2", clase_binaria := "pos"]
+
+
+# chequeo la cant de cada variable
+dataset[clase_binaria == "neg", .N]
+dataset[clase_binaria == "pos", .N]
+
+
+
+dtrain <- dataset[foto_mes == 202107] # defino donde voy a entrenar
+dapply <- dataset[foto_mes == 202109] # defino donde voy a aplicar el modelo
+
+# genero el modelo,  aqui se construye el arbol
+# quiero predecir clase_ternaria a partir de el resto de las variables
+modelo <- rpart(
+        formula = "clase_binaria ~ .",
+        data = dtrain, # los datos donde voy a entrenar
+        xval = 0,
+        cp = -0.2, # esto significa no limitar la complejidad de los splits
+        minsplit = 750, # minima cantidad de registros para que se haga el split
+        minbucket = 300, # tamaño minimo de una hoja
+        maxdepth = 6
+) # profundidad maxima del arbol
+
+
+# grafico el arbol
+prp(modelo,
+        extra = 101, digits = -5,
+        branch = 1, type = 4, varlen = 0, faclen = 0
+)
+
+
+# aplico el modelo a los datos nuevos
+prediccion <- predict(
+        object = modelo,
+        newdata = dapply,
+        type = "prob"
+)
+
+# prediccion es una matriz con TRES columnas,
+# llamadas "pos", y "neg"
+# cada columna es el vector de probabilidades
+
+# agrego a dapply una columna nueva que es la probabilidad de pos
+dapply[, prob_pos := prediccion[, "pos"]]
+
+# solo le envio estimulo a los registros
+#  con probabilidad de pos mayor  a  1/40
+dapply[, Predicted := as.numeric(prob_pos > 1 / 40)]
+
+# genero el archivo para Kaggle
+# primero creo la carpeta donde va el experimento
+dir.create("./exp/")
+dir.create("./exp/KA2001")
+
+# solo los campos para Kaggle
+fwrite(dapply[, list(numero_de_cliente, Predicted)],
+        file = "./exp/KA2001/K101_050_binaria2_ranking.csv",
+        sep = ","
+)
+
+
+entrega <- data.table(list(numero_de_cliente, Predicted))
+#entrega[, .N, Predicted]
+entrega
