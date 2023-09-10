@@ -22,7 +22,7 @@ PARAM$experimento <- "FE6310"
 PARAM$exp_input <- "DR6210"
 
 PARAM$lag1 <- TRUE
-PARAM$lag2 <- TRUE
+PARAM$lag2 <- FALSE
 PARAM$lag3 <- FALSE
 
 PARAM$Tendencias1$run <- TRUE
