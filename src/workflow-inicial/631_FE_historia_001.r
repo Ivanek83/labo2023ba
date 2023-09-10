@@ -36,7 +36,7 @@ PARAM$Tendencias1$ratiomax <- FALSE
 
 PARAM$Tendencias2$run <- FALSE
 PARAM$Tendencias2$ventana <- 12
-PARAM$Tendencias2$tendencia <- TRUE
+PARAM$Tendencias2$tendencia <- FALSE
 PARAM$Tendencias2$minimo <- FALSE
 PARAM$Tendencias2$maximo <- FALSE
 PARAM$Tendencias2$promedio <- FALSE
@@ -46,7 +46,7 @@ PARAM$Tendencias2$ratiomax <- FALSE
 
 PARAM$RandomForest$run <- TRUE
 PARAM$RandomForest$num.trees <- 150
-PARAM$RandomForest$max.depth <- 15
+PARAM$RandomForest$max.depth <- 12
 PARAM$RandomForest$min.node.size <- 100
 PARAM$RandomForest$mtry <- 60
 PARAM$RandomForest$semilla <- 124541 # cambiar por la propia semilla
