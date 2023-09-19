@@ -27,7 +27,7 @@ options(error = function() {
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "HT6510"
+PARAM$experimento <- "HT6510_001"
 
 PARAM$exp_input <- "TS6410"
 
@@ -39,7 +39,7 @@ PARAM$lgb_semilla <- 124541 # cambiar por su propia semilla
 
 # Hiperparametros FIJOS de  lightgbm
 PARAM$lgb_basicos <- list(
-  boosting = "dart", # puede ir  dart  , ni pruebe random_forest
+  boosting = "gbdt", # puede ir  dart  , ni pruebe random_forest
   objective = "binary",
   metric = "custom",
   first_metric_only = TRUE,
@@ -82,7 +82,7 @@ PARAM$bo_lgb <- makeParamSet(
 
 
 # si usted es ambicioso, y tiene paciencia, podria subir este valor a 100
-PARAM$bo_iteraciones <- 50 # iteraciones de la Optimizacion Bayesiana
+PARAM$bo_iteraciones <- 40 # iteraciones de la Optimizacion Bayesiana
 
 PARAM$home <- "~/buckets/b1/"
 
