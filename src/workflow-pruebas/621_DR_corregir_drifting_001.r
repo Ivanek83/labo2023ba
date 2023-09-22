@@ -151,9 +151,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   #2)-------------------------------------------------------------
   # Sumo todas las variables segun el movimiento de dinero
 
-  dataset[, X2_balance := 
-  
-  (mpayroll + mpayroll2 + mcajeros_propios_descuentos + mtarjeta_visa_descuentos + mtarjeta_master_descuentos 
+  dataset[, X2_balance := (mpayroll + mpayroll2 + mcajeros_propios_descuentos + mtarjeta_visa_descuentos + mtarjeta_master_descuentos 
   + mtransferencias_recibidas + mcheques_depositados + mcheques_emitidos) -   
   
   (mautoservicio + mtarjeta_visa_consumo + mtarjeta_master_consumo + mprestamos_personales + mprestamos_prendarios 
