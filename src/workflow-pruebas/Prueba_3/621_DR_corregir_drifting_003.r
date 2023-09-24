@@ -334,9 +334,9 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # Calculo la media y la desviación estándar de cada variable monetaria por Mes
 
-  medias <- dataset[, .(Media_mrentabilidad = mean(mrentabilidad)), by = foto_mes]
-  medias <- dataset[, .(Media_mrentabilidad_annual = mean(mrentabilidad_annual)), by = foto_mes]
-  medias <- dataset[, .(Media_mcomisiones = mean(mcomisiones)), by = foto_mes]
+  medias <- dataset[, .(Media_mrentabilidad := mean(mrentabilidad)), by = foto_mes]
+  medias <- dataset[, .(Media_mrentabilidad_annual := mean(mrentabilidad_annual)), by = foto_mes]
+  medias <- dataset[, .(Media_mcomisiones := mean(mcomisiones)), by = foto_mes]
   medias <- dataset[, .(Media_mactivos_margen = mean(mactivos_margen)), by = foto_mes]
   medias <- dataset[, .(Media_mpasivos_margen = mean(mpasivos_margen)), by = foto_mes]
   medias <- dataset[, .(Media_mcuenta_corriente_adicional = mean(mcuenta_corriente_adicional)), by = foto_mes]
@@ -475,10 +475,10 @@ AgregarVariables_IntraMes <- function(dataset) {
   desviaciones <- dataset[, .(SD_Visa_mpagominimo = sd(Visa_mpagominimo)), by = foto_mes]
 
   # Hago un Merge de medias y desviaciones en el dataset original
-
+  comment <- '
   dataset <- merge(dataset, medias, by = "foto_mes", all.x = TRUE)
   dataset <- merge(dataset, desviaciones, by = "foto_mes", all.x = TRUE)
-
+  '
   # Normalizo las Variables por Mes utilizando la media y desviación estándar
 
   dataset[, X7_mrentabilidad_normalizada := (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad]
