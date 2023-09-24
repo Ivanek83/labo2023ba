@@ -146,14 +146,12 @@ AgregarVariables_IntraMes <- function(dataset) {
   # Elimino la columna Suma_cantidades
   #dataset[, X1_Suma_cantytrans := NULL]
 
-  commment <- '
 
   #2)-------------------------------------------------------------
   # Sumo todas las variables segun el movimiento de dinero
 
   dataset[, X2_balance := (mpayroll + mpayroll2 + mcajeros_propios_descuentos + mtarjeta_visa_descuentos + mtarjeta_master_descuentos 
   + mtransferencias_recibidas + mcheques_depositados + mcheques_emitidos) -   
-  
   (mautoservicio + mtarjeta_visa_consumo + mtarjeta_master_consumo + mprestamos_personales + mprestamos_prendarios 
   + mprestamos_hipotecarios + mcuenta_debitos_automaticos + mtarjeta_visa_debitos_automaticos + mttarjeta_master_debitos_automaticos 
   + mpagodeservicios + mpagomiscuentas + mcomisiones_mantenimiento + mcomisiones_otras + mtransferencias_emitidas 
@@ -179,7 +177,7 @@ AgregarVariables_IntraMes <- function(dataset) {
 
 
   # Calculo los deciles de la variable Suma_cantidades y creo una nueva columna
-  dataset[, X3_Suma_cantidades_decil := frank(X3_Suma_cantidades, ties.method = "first", n.ties = 10), by=foto_mes]
+  dataset[, X3_Suma_cantidades_decil := frankv(X3_Suma_cantidades, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
   # Elimino la columna Suma_cantidades
   #dataset[, X3_Suma_cantidades := NULL]
@@ -189,77 +187,77 @@ AgregarVariables_IntraMes <- function(dataset) {
   # Calculo la relacion entre la edad y la antiguedad del cliente
 
   dataset[, X4_edad_antiguedad := cliente_antiguedad / (cliente_edad * 12)]
-  dataset[, X4_cliente_edad_decil := frank(cliente_edad, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X4_cliente_antiguedad_decil := frank(cliente_antiguedad, ties.method = "first", n.ties = 10), by=foto_mes]
+  dataset[, X4_cliente_edad_decil := frankv(cliente_edad, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X4_cliente_antiguedad_decil := frankv(cliente_antiguedad, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
   #5)-------------------------------------------------------------
   # Hago un rankeo de las variables de montos y saldos totales: 
   #dataset[,, by=foto_mes, .SDcols= ]
-  dataset[, X5_mcomisiones_decil := frank(mcomisiones, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mactivos_margen_decil := frank(mactivos_margen, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mpasivos_margen_decil := frank(mpasivos_margen, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcuenta_corriente_adicional_decil := frank(mcuenta_corriente_adicional, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcuenta_corriente_decil := frank(mcuenta_corriente, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcaja_ahorro_decil := frank(mcaja_ahorro, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcaja_ahorro_adicional_decil := frank(mcaja_ahorro_adicional, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcaja_ahorro_dolares_decil := frank(mcaja_ahorro_dolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcuentas_saldo_decil := frank(mcuentas_saldo, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mautoservicio_decil := frank(mautoservicio, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtarjeta_visa_consumo_decil := frank(mtarjeta_visa_consumo, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtarjeta_master_consumo_decil := frank(mtarjeta_master_consumo, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mprestamos_personales_decil := frank(mprestamos_personales, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mprestamos_prendarios_decil := frank(mprestamos_prendarios, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mprestamos_hipotecarios_decil := frank(mprestamos_hipotecarios, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mplazo_fijo_dolares_decil := frank(mplazo_fijo_dolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mplazo_fijo_pesos_decil := frank(mplazo_fijo_pesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_minversion1_pesos_decil := frank(minversion1_pesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_minversion1_dolares_decil := frank(minversion1_dolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_minversion2_decil := frank(minversion2, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mpayroll_decil := frank(mpayroll, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mpayroll2_decil := frank(mpayroll2, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcuenta_debitos_automaticos_decil := frank(mcuenta_debitos_automaticos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtarjeta_visa_debitos_automaticos_decil := frank(mtarjeta_visa_debitos_automaticos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mttarjeta_master_debitos_automaticos_decil := frank(mttarjeta_master_debitos_automaticos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mpagodeservicios_decil := frank(mpagodeservicios, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mpagomiscuentas_decil := frank(mpagomiscuentas, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcajeros_propios_descuentos_decil := frank(mcajeros_propios_descuentos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtarjeta_visa_descuentos_decil := frank(mtarjeta_visa_descuentos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtarjeta_master_descuentos_decil := frank(mtarjeta_master_descuentos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcomisiones_mantenimiento_decil := frank(mcomisiones_mantenimiento, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcomisiones_otras_decil := frank(mcomisiones_otras, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mforex_buy_decil := frank(mforex_buy, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mforex_sell_decil := frank(mforex_sell, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtransferencias_recibidas_decil := frank(mtransferencias_recibidas, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mtransferencias_emitidas_decil := frank(mtransferencias_emitidas, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mextraccion_autoservicio_decil := frank(mextraccion_autoservicio, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcheques_depositados_decil := frank(mcheques_depositados, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcheques_emitidos_decil := frank(mcheques_emitidos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcheques_depositados_rechazados_decil := frank(mcheques_depositados_rechazados, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_mcheques_emitidos_rechazados_decil := frank(mcheques_emitidos_rechazados, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_matm_decil := frank(matm, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_matm_other_decil := frank(matm_other, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_msaldototal_decil := frank(Master_msaldototal, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_msaldopesos_decil := frank(Master_msaldopesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_msaldodolares_decil := frank(Master_msaldodolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_mconsumospesos_decil := frank(Master_mconsumospesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_mconsumosdolares_decil := frank(Master_mconsumosdolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_mpagado_decil := frank(Master_mpagado, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_mpagospesos_decil := frank(Master_mpagospesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_mpagosdolares_decil := frank(Master_mpagosdolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Master_mconsumototal_decil := frank(Master_mconsumototal, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_msaldototal_decil := frank(Visa_msaldototal, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_msaldopesos_decil := frank(Visa_msaldopesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_msaldodolares_decil := frank(Visa_msaldodolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_mconsumospesos_decil := frank(Visa_mconsumospesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_mconsumosdolares_decil := frank(Visa_mconsumosdolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_mpagado_decil := frank(Visa_mpagado, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_mpagospesos_decil := frank(Visa_mpagospesos, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_mpagosdolares_decil := frank(Visa_mpagosdolares, ties.method = "first", n.ties = 10), by=foto_mes]
-  dataset[, X5_Visa_mconsumototal_decil := frank(Visa_mconsumototal, ties.method = "first", n.ties = 10), by=foto_mes]
+  dataset[, X5_mcomisiones_decil := frankv(mcomisiones, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mactivos_margen_decil := frankv(mactivos_margen, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mpasivos_margen_decil := frankv(mpasivos_margen, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcuenta_corriente_adicional_decil := frankv(mcuenta_corriente_adicional, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcuenta_corriente_decil := frankv(mcuenta_corriente, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcaja_ahorro_decil := frankv(mcaja_ahorro, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcaja_ahorro_adicional_decil := frankv(mcaja_ahorro_adicional, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcaja_ahorro_dolares_decil := frankv(mcaja_ahorro_dolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcuentas_saldo_decil := frankv(mcuentas_saldo, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mautoservicio_decil := frankv(mautoservicio, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtarjeta_visa_consumo_decil := frankv(mtarjeta_visa_consumo, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtarjeta_master_consumo_decil := frankv(mtarjeta_master_consumo, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mprestamos_personales_decil := frankv(mprestamos_personales, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mprestamos_prendarios_decil := frankv(mprestamos_prendarios, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mprestamos_hipotecarios_decil := frankv(mprestamos_hipotecarios, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mplazo_fijo_dolares_decil := frankv(mplazo_fijo_dolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mplazo_fijo_pesos_decil := frankv(mplazo_fijo_pesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_minversion1_pesos_decil := frankv(minversion1_pesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_minversion1_dolares_decil := frankv(minversion1_dolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_minversion2_decil := frankv(minversion2, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mpayroll_decil := frankv(mpayroll, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mpayroll2_decil := frankv(mpayroll2, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcuenta_debitos_automaticos_decil := frankv(mcuenta_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtarjeta_visa_debitos_automaticos_decil := frankv(mtarjeta_visa_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mttarjeta_master_debitos_automaticos_decil := frankv(mttarjeta_master_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mpagodeservicios_decil := frankv(mpagodeservicios, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mpagomiscuentas_decil := frankv(mpagomiscuentas, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcajeros_propios_descuentos_decil := frankv(mcajeros_propios_descuentos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtarjeta_visa_descuentos_decil := frankv(mtarjeta_visa_descuentos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtarjeta_master_descuentos_decil := frankv(mtarjeta_master_descuentos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcomisiones_mantenimiento_decil := frankv(mcomisiones_mantenimiento, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcomisiones_otras_decil := frankv(mcomisiones_otras, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mforex_buy_decil := frankv(mforex_buy, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mforex_sell_decil := frankv(mforex_sell, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtransferencias_recibidas_decil := frankv(mtransferencias_recibidas, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtransferencias_emitidas_decil := frankv(mtransferencias_emitidas, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mextraccion_autoservicio_decil := frankv(mextraccion_autoservicio, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcheques_depositados_decil := frankv(mcheques_depositados, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcheques_emitidos_decil := frankv(mcheques_emitidos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcheques_depositados_rechazados_decil := frankv(mcheques_depositados_rechazados, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcheques_emitidos_rechazados_decil := frankv(mcheques_emitidos_rechazados, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_matm_decil := frankv(matm, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_matm_other_decil := frankv(matm_other, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_msaldototal_decil := frankv(Master_msaldototal, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_msaldopesos_decil := frankv(Master_msaldopesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_msaldodolares_decil := frankv(Master_msaldodolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_mconsumospesos_decil := frankv(Master_mconsumospesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_mconsumosdolares_decil := frankv(Master_mconsumosdolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_mpagado_decil := frankv(Master_mpagado, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_mpagospesos_decil := frankv(Master_mpagospesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_mpagosdolares_decil := frankv(Master_mpagosdolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Master_mconsumototal_decil := frankv(Master_mconsumototal, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_msaldototal_decil := frankv(Visa_msaldototal, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_msaldopesos_decil := frankv(Visa_msaldopesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_msaldodolares_decil := frankv(Visa_msaldodolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_mconsumospesos_decil := frankv(Visa_mconsumospesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_mconsumosdolares_decil := frankv(Visa_mconsumosdolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_mpagado_decil := frankv(Visa_mpagado, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_mpagospesos_decil := frankv(Visa_mpagospesos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_mpagosdolares_decil := frankv(Visa_mpagosdolares, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_Visa_mconsumototal_decil := frankv(Visa_mconsumototal, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
 
 
-'
+
 
 
 
