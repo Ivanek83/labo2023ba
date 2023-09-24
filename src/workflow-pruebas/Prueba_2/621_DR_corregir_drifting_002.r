@@ -141,12 +141,12 @@ AgregarVariables_IntraMes <- function(dataset) {
 
 
   # Calculo los deciles de la variable Suma_cantidades y creo una nueva columna
-  dataset[, X1_Suma_cantytrans_decil := frank(X1_Suma_cantytrans, ties.method = "first", n.ties = 10,), by=foto_mes]
+  dataset[, X1_Suma_cantytrans_decil := frankv(X1_Suma_cantytrans, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
   # Elimino la columna Suma_cantidades
   #dataset[, X1_Suma_cantytrans := NULL]
 
-
+  commment <- '
 
   #2)-------------------------------------------------------------
   # Sumo todas las variables segun el movimiento de dinero
@@ -259,7 +259,7 @@ AgregarVariables_IntraMes <- function(dataset) {
 
 
 
-
+'
 
 
 
