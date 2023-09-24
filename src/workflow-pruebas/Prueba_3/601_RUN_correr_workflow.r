@@ -9,6 +9,12 @@ options(error = function() {
 
 # corrida de cada paso del workflow
 
+# Registra la hora de inicio
+hora_inicio <- Sys.time()
+
+
+
+
 # primeros pasos, relativamente rapidos
 
 cat("\n\n Inicia prueba 003: 611 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n")
@@ -31,3 +37,24 @@ source("~/labo2023ba/src/workflow-pruebas/Prueba_3/651_HT_lightgbm_003.r")
 
 cat("\n\n Inicia prueba 003: 661 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n")
 source("~/labo2023ba/src/workflow-pruebas/Prueba_3/661_ZZ_final_003.r")
+
+
+
+
+
+# Registra la hora de finalización
+hora_fin <- Sys.time()
+
+# Calcula la diferencia de tiempo en segundos
+diferencia_segundos <- as.numeric(difftime(hora_fin, hora_inicio, units = "secs"))
+
+# Convierte la diferencia de tiempo a días, horas, minutos y segundos
+dias <- floor(diferencia_segundos / (3600 * 24))
+horas <- floor((diferencia_segundos %% (3600 * 24)) / 3600)
+minutos <- floor((diferencia_segundos %% 3600) / 60)
+segundos <- diferencia_segundos %% 60
+
+# Muestra el tiempo transcurrido
+cat("Tiempo transcurrido:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n")
+
+
