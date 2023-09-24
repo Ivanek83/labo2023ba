@@ -17,7 +17,7 @@ hora_inicio <- Sys.time()
 
 # primeros pasos, relativamente rapidos
 
-cat("\n\n Inicia prueba 003: 611 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n")
+cat("\n\n\n\n Inicia prueba 003: 611 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n")
 source("~/labo2023ba/src/workflow-pruebas/Prueba_3/611_CA_reparar_dataset_003.r")
 
 cat("\n\n Inicia prueba 003: 621 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n")
