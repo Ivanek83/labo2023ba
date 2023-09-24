@@ -334,9 +334,10 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # Calculo la media y la desviación estándar de cada variable monetaria por Mes
 
-  medias <- dataset[, .(Media_mrentabilidad = mean(mrentabilidad, na.rm = TRUE)), by = foto_mes]
-  medias <- dataset[, .(Media_mrentabilidad_annual = mean(mrentabilidad_annual, na.rm = TRUE)), by = foto_mes]
-  medias <- dataset[, .(Media_mcomisiones = mean(mcomisiones, na.rm = TRUE)), by = foto_mes]
+  dataset[, Media_mrentabilidad := mean(mrentabilidad, na.rm = TRUE), by = foto_mes]
+  dataset[, Media_mrentabilidad_annual := mean(mrentabilidad_annual, na.rm = TRUE), by = foto_mes]
+  dataset[, Media_mcomisiones := mean(mcomisiones, na.rm = TRUE), by = foto_mes]
+  comment <- '
   medias <- dataset[, .(Media_mactivos_margen = mean(mactivos_margen, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_mpasivos_margen = mean(mpasivos_margen, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_mcuenta_corriente_adicional = mean(mcuenta_corriente_adicional, na.rm = TRUE)), by = foto_mes]
@@ -403,10 +404,11 @@ AgregarVariables_IntraMes <- function(dataset) {
   medias <- dataset[, .(Media_Visa_mpagosdolares = mean(Visa_mpagosdolares, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mconsumototal = mean(Visa_mconsumototal, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mpagominimo = mean(Visa_mpagominimo, na.rm = TRUE)), by = foto_mes]
- 
-  desviaciones <- dataset[, .(SD_mrentabilidad = sd(mrentabilidad, na.rm = TRUE)), by = foto_mes]
-  desviaciones <- dataset[, .(SD_mrentabilidad_annual = sd(mrentabilidad_annual, na.rm = TRUE)), by = foto_mes]
-  desviaciones <- dataset[, .(SD_mcomisiones = sd(mcomisiones, na.rm = TRUE)), by = foto_mes]
+  '
+  dataset[, SD_mrentabilidad := sd(mrentabilidad, na.rm = TRUE), by = foto_mes]
+  dataset[, SD_mrentabilidad_annual := sd(mrentabilidad_annual, na.rm = TRUE), by = foto_mes]
+  dataset[, SD_mcomisiones := sd(mcomisiones, na.rm = TRUE), by = foto_mes]
+  comment <- '
   desviaciones <- dataset[, .(SD_mactivos_margen = sd(mactivos_margen, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_mpasivos_margen = sd(mpasivos_margen, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_mcuenta_corriente_adicional = sd(mcuenta_corriente_adicional, na.rm = TRUE)), by = foto_mes]
@@ -478,19 +480,17 @@ AgregarVariables_IntraMes <- function(dataset) {
   # Hago un Merge de medias y desviaciones en el dataset original
   dataset <- merge(dataset, medias, by = "foto_mes", all.x = TRUE)
   dataset <- merge(dataset, desviaciones, by = "foto_mes", all.x = TRUE)
-  
+  '
   # Normalizo las Variables por Mes utilizando la media y desviación estándar
   cat("llego hasta aca 483")
   
-  #dataset[, X7_mrentabilidad_normalizada := ifelse(all(is.na(mrentabilidad) | is.na(Media_mrentabilidad) | is.na(SD_mrentabilidad)), NA,(mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
-
   dataset[, X7_mrentabilidad_normalizada := ifelse((!is.na(mrentabilidad)), 1, NA)]
 
-  cat("NO ESTA LA VARIABLE")
-  cat("LLego bien!")
 
-  dataset[, X7_mrentabilidad_annual_normalizada := (mrentabilidad_annual - Media_mrentabilidad_annual) / SD_mrentabilidad_annual]
-  dataset[, X7_mcomisiones_normalizada := (mcomisiones - Media_mcomisiones) / SD_mcomisiones]
+  dataset[, X7_mrentabilidad_normalizada := ifelse(any(is.na(c(mrentabilidad, Media_mrentabilidad, SD_mrentabilidad))), NA, (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
+  dataset[, X7_mrentabilidad_annual_normalizada := ifelse(any(is.na(c(mrentabilidad_annual, Media_mrentabilidad_annual, SD_mrentabilidad_annual))), NA, (mrentabilidad_annual - Media_mrentabilidad_annual) / SD_mrentabilidad_annual)]
+  dataset[, X7_mcomisiones_normalizada := ifelse(any(is.na(c(mcomisiones, Media_mcomisiones, SD_mcomisiones))), NA, (mcomisiones - Media_mcomisiones) / SD_mcomisiones)]
+  comment <- '
   dataset[, X7_mactivos_margen_normalizada := (mactivos_margen - Media_mactivos_margen) / SD_mactivos_margen]
   dataset[, X7_mpasivos_margen_normalizada := (mpasivos_margen - Media_mpasivos_margen) / SD_mpasivos_margen]
   dataset[, X7_mcuenta_corriente_adicional_normalizada := (mcuenta_corriente_adicional - Media_mcuenta_corriente_adicional) / SD_mcuenta_corriente_adicional]
@@ -699,11 +699,12 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, SD_Visa_mpagosdolares := NULL]
   dataset[, SD_Visa_mconsumototal := NULL]
   dataset[, SD_Visa_mpagominimo := NULL]
-  
+  '
   #8)-------------------------------------------------------------
   # Normalizo las variables monetarias
 
 
+  cat("LLego bien!")
 
 
 
