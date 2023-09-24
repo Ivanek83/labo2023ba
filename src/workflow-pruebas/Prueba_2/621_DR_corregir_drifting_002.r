@@ -216,7 +216,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, X5_mpayroll_decil := frankv(mpayroll, ties.method = "dense", na.last = "keep"), by=foto_mes]
   dataset[, X5_mpayroll2_decil := frankv(mpayroll2, ties.method = "dense", na.last = "keep"), by=foto_mes]
   dataset[, X5_mcuenta_debitos_automaticos_decil := frankv(mcuenta_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
-  dataset[, X5_mtarjeta_visa_debitos_automaticos_decil := frankv(mtarjeta_visa_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mttarjeta_visa_debitos_automaticos_decil := frankv(mttarjeta_visa_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
   dataset[, X5_mttarjeta_master_debitos_automaticos_decil := frankv(mttarjeta_master_debitos_automaticos, ties.method = "dense", na.last = "keep"), by=foto_mes]
   dataset[, X5_mpagodeservicios_decil := frankv(mpagodeservicios, ties.method = "dense", na.last = "keep"), by=foto_mes]
   dataset[, X5_mpagomiscuentas_decil := frankv(mpagomiscuentas, ties.method = "dense", na.last = "keep"), by=foto_mes]
