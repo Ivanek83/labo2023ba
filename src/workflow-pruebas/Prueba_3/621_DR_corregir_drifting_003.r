@@ -403,7 +403,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   medias <- dataset[, .(Media_Visa_mpagosdolares = mean(Visa_mpagosdolares, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mconsumototal = mean(Visa_mconsumototal, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mpagominimo = mean(Visa_mpagominimo, na.rm = TRUE)), by = foto_mes]
-  
+  medias[is.nan(medias)] <- NA
   
 
   desviaciones <- dataset[, .(SD_mrentabilidad = sd(mrentabilidad, na.rm = TRUE)), by = foto_mes]
@@ -475,6 +475,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   desviaciones <- dataset[, .(SD_Visa_mpagosdolares = sd(Visa_mpagosdolares, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_Visa_mconsumototal = sd(Visa_mconsumototal, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_Visa_mpagominimo = sd(Visa_mpagominimo, na.rm = TRUE)), by = foto_mes]
+  desviaciones[is.nan(desviaciones)] <- NA
 
   # Hago un Merge de medias y desviaciones en el dataset original
   
@@ -554,7 +555,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, X7_Visa_mpagominimo_normalizada := (Visa_mpagominimo - Media_Visa_mpagominimo) / SD_Visa_mpagominimo]
 
   # Elimino las variables que no utilizo
-  comment <- '
+  
   dataset[, Media_mrentabilidad := NULL]
   dataset[, Media_mrentabilidad_annual := NULL]
   dataset[, Media_mcomisiones := NULL]
@@ -694,7 +695,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, SD_Visa_mpagosdolares := NULL]
   dataset[, SD_Visa_mconsumototal := NULL]
   dataset[, SD_Visa_mpagominimo := NULL]
-  '
+  
   #8)-------------------------------------------------------------
   # Normalizo las variables monetarias
 
