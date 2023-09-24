@@ -554,7 +554,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, X7_Visa_mpagominimo_normalizada := (Visa_mpagominimo - Media_Visa_mpagominimo) / SD_Visa_mpagominimo]
 
   # Elimino las variables que no utilizo
-
+  comment <- '
   dataset[, Media_mrentabilidad := NULL]
   dataset[, Media_mrentabilidad_annual := NULL]
   dataset[, Media_mcomisiones := NULL]
@@ -694,7 +694,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, SD_Visa_mpagosdolares := NULL]
   dataset[, SD_Visa_mconsumototal := NULL]
   dataset[, SD_Visa_mpagominimo := NULL]
-
+  '
   #8)-------------------------------------------------------------
   # Normalizo las variables monetarias
 
