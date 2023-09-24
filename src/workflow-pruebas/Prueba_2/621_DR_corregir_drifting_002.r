@@ -153,7 +153,7 @@ AgregarVariables_IntraMes <- function(dataset) {
   dataset[, X2_balance := (mpayroll + mpayroll2 + mcajeros_propios_descuentos + mtarjeta_visa_descuentos + mtarjeta_master_descuentos 
   + mtransferencias_recibidas + mcheques_depositados + mcheques_emitidos) -   
   (mautoservicio + mtarjeta_visa_consumo + mtarjeta_master_consumo + mprestamos_personales + mprestamos_prendarios 
-  + mprestamos_hipotecarios + mcuenta_debitos_automaticos + mtarjeta_visa_debitos_automaticos + mttarjeta_master_debitos_automaticos 
+  + mprestamos_hipotecarios + mcuenta_debitos_automaticos + mttarjeta_visa_debitos_automaticos + mttarjeta_master_debitos_automaticos 
   + mpagodeservicios + mpagomiscuentas + mcomisiones_mantenimiento + mcomisiones_otras + mtransferencias_emitidas 
   + mextraccion_autoservicio + Master_mconsumospesos + Master_mconsumosdolares + Master_madelantopesos + Master_madelantodolares 
   + Master_mpagado + Master_mpagospesos + Master_mpagosdolares + Master_mconsumototal + Visa_mconsumospesos + Visa_mconsumosdolares 
