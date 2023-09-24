@@ -403,8 +403,8 @@ AgregarVariables_IntraMes <- function(dataset) {
   medias <- dataset[, .(Media_Visa_mpagosdolares = mean(Visa_mpagosdolares, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mconsumototal = mean(Visa_mconsumototal, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mpagominimo = mean(Visa_mpagominimo, na.rm = TRUE)), by = foto_mes]
-  medias[is.nan(medias)] <- NA
-  
+ 
+  cat("llego hasta aca 407")
 
   desviaciones <- dataset[, .(SD_mrentabilidad = sd(mrentabilidad, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_mrentabilidad_annual = sd(mrentabilidad_annual, na.rm = TRUE)), by = foto_mes]
