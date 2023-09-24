@@ -404,8 +404,6 @@ AgregarVariables_IntraMes <- function(dataset) {
   medias <- dataset[, .(Media_Visa_mconsumototal = mean(Visa_mconsumototal, na.rm = TRUE)), by = foto_mes]
   medias <- dataset[, .(Media_Visa_mpagominimo = mean(Visa_mpagominimo, na.rm = TRUE)), by = foto_mes]
  
-  cat("llego hasta aca 407")
-
   desviaciones <- dataset[, .(SD_mrentabilidad = sd(mrentabilidad, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_mrentabilidad_annual = sd(mrentabilidad_annual, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_mcomisiones = sd(mcomisiones, na.rm = TRUE)), by = foto_mes]
@@ -478,18 +476,17 @@ AgregarVariables_IntraMes <- function(dataset) {
   
 
   # Hago un Merge de medias y desviaciones en el dataset original
-  cat ("llego hasta aca 481")
   dataset <- merge(dataset, medias, by = "foto_mes", all.x = TRUE)
   dataset <- merge(dataset, desviaciones, by = "foto_mes", all.x = TRUE)
   
   # Normalizo las Variables por Mes utilizando la media y desviación estándar
-  cat("llego hasta aca 486")
+  cat("llego hasta aca 483")
   
   #dataset[, X7_mrentabilidad_normalizada := ifelse(all(is.na(mrentabilidad) | is.na(Media_mrentabilidad) | is.na(SD_mrentabilidad)), NA,(mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
 
-  dataset[, X7_mrentabilidad_normalizada := ifelse(all(!is.na(c(mrentabilidad, Media_mrentabilidad, SD_mrentabilidad))), (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad, NA)]
+  dataset[, X7_mrentabilidad_normalizada := ifelse((!is.na(mrentabilidad)), 1, NA)]
 
-
+  cat("NO ESTA LA VARIABLE")
   cat("LLego bien!")
 
   dataset[, X7_mrentabilidad_annual_normalizada := (mrentabilidad_annual - Media_mrentabilidad_annual) / SD_mrentabilidad_annual]
