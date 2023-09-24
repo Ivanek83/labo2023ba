@@ -485,7 +485,10 @@ AgregarVariables_IntraMes <- function(dataset) {
   # Normalizo las Variables por Mes utilizando la media y desviación estándar
   cat("llego hasta aca 486")
   
-  dataset[, X7_mrentabilidad_normalizada := ifelse(all(is.na(mrentabilidad) | is.na(Media_mrentabilidad) | is.na(SD_mrentabilidad)), NA,(mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
+  #dataset[, X7_mrentabilidad_normalizada := ifelse(all(is.na(mrentabilidad) | is.na(Media_mrentabilidad) | is.na(SD_mrentabilidad)), NA,(mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
+
+  dataset[, X7_mrentabilidad_normalizada := ifelse(all(!is.na(c(mrentabilidad, Media_mrentabilidad, SD_mrentabilidad))), (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad, NA)]
+
 
   cat("LLego bien!")
 
