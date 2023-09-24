@@ -475,15 +475,15 @@ AgregarVariables_IntraMes <- function(dataset) {
   desviaciones <- dataset[, .(SD_Visa_mpagosdolares = sd(Visa_mpagosdolares, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_Visa_mconsumototal = sd(Visa_mconsumototal, na.rm = TRUE)), by = foto_mes]
   desviaciones <- dataset[, .(SD_Visa_mpagominimo = sd(Visa_mpagominimo, na.rm = TRUE)), by = foto_mes]
-  desviaciones[is.nan(desviaciones)] <- NA
+  
 
   # Hago un Merge de medias y desviaciones en el dataset original
-  
+  cat ("llego hasta aca 481")
   dataset <- merge(dataset, medias, by = "foto_mes", all.x = TRUE)
   dataset <- merge(dataset, desviaciones, by = "foto_mes", all.x = TRUE)
   
   # Normalizo las Variables por Mes utilizando la media y desviación estándar
-
+  cat("llego hasta aca 486")
   dataset[, X7_mrentabilidad_normalizada := (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad]
   dataset[, X7_mrentabilidad_annual_normalizada := (mrentabilidad_annual - Media_mrentabilidad_annual) / SD_mrentabilidad_annual]
   dataset[, X7_mcomisiones_normalizada := (mcomisiones - Media_mcomisiones) / SD_mcomisiones]
