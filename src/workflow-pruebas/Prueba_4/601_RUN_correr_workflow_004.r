@@ -1,3 +1,4 @@
+# labo2023ba$ git pull origin --rebase
 # Corrida general del workflow
 
 options(error = function() {
