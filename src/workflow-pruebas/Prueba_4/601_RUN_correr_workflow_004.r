@@ -13,31 +13,31 @@ options(error = function() {
 # Registra la hora de inicio
 hora_inicio <- Sys.time()
 
-cat("\n Inicia Script 003\n\n", file = "Tiempo_Script.txt", append = TRUE)
+cat("\n Inicia Script 004\n\n", file = "Tiempo_Script.txt", append = TRUE)
 cat("hora_inicio GMT0: ", hora_inicio, "\n", file = "Tiempo_Script.txt", append = TRUE)
 
 # primeros pasos, relativamente rapidos
 
-cat("\n\n Inicia prueba 003: 611 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_3/611_CA_reparar_dataset_003.r")
+cat("\n\n Script 611_CA - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_4/611_CA_reparar_dataset_004.r")
 
-cat("\n\n Inicia prueba 003: 621 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_3/621_DR_corregir_drifting_003.r")
+cat("\n\n Script 621_DR - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_4/621_DR_corregir_drifting_004.r")
 
-cat("\n\n Inicia prueba 003: 631 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_3/631_FE_historia_003.r")
+cat("\n\n Script 631_FE - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_4/631_FE_historia_004.r")
 
-cat("\n\n Inicia prueba 003: 641 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_3/641_TS_training_strategy_003.r")
+cat("\n\n Script 641_TS - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_4/641_TS_training_strategy_004.r")
 
 
 # ultimos pasos, muy lentos
 
-cat("\n\n Inicia prueba 003: 651 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_3/651_HT_lightgbm_003.r")
+cat("\n\n Script: 651_HT - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_4/651_HT_lightgbm_004.r")
 
-cat("\n\n Inicia prueba 003: 661 - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_3/661_ZZ_final_003.r")
+cat("\n\n Script 661_ZZ - Hora de inicio: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_4/661_ZZ_final_004.r")
 
 
 
@@ -57,6 +57,6 @@ minutos <- floor((diferencia_segundos %% 3600) / 60)
 segundos <- diferencia_segundos %% 60
 
 # Muestra el tiempo transcurrido
-cat("Tiempo transcurrido:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = "Tiempo_Script.txt", append = TRUE)
+cat("Tiempo transcurrido Script 004:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = "Tiempo_Script.txt", append = TRUE)
 
 
