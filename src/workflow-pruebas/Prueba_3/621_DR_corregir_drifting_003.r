@@ -484,12 +484,9 @@ AgregarVariables_IntraMes <- function(dataset) {
   # Normalizo las Variables por Mes utilizando la media y desviación estándar
   cat("llego hasta aca 483")
   
-  dataset[, X7_mrentabilidad_normalizada := ifelse((!is.na(mrentabilidad)), 1, NA)]
-
-
-  dataset[, X7_mrentabilidad_normalizada := ifelse(any(is.na(c(mrentabilidad, Media_mrentabilidad, SD_mrentabilidad))), NA, (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
-  dataset[, X7_mrentabilidad_annual_normalizada := ifelse(any(is.na(c(mrentabilidad_annual, Media_mrentabilidad_annual, SD_mrentabilidad_annual))), NA, (mrentabilidad_annual - Media_mrentabilidad_annual) / SD_mrentabilidad_annual)]
-  dataset[, X7_mcomisiones_normalizada := ifelse(any(is.na(c(mcomisiones, Media_mcomisiones, SD_mcomisiones))), NA, (mcomisiones - Media_mcomisiones) / SD_mcomisiones)]
+  dataset[, X7_mrentabilidad_normalizada := ifelse(any(is.na(c(mrentabilidad, Media_mrentabilidad, SD_mrentabilidad))), 0, (mrentabilidad - Media_mrentabilidad) / SD_mrentabilidad)]
+  dataset[, X7_mrentabilidad_annual_normalizada := ifelse(any(is.na(c(mrentabilidad_annual, Media_mrentabilidad_annual, SD_mrentabilidad_annual))), 0, (mrentabilidad_annual - Media_mrentabilidad_annual) / SD_mrentabilidad_annual)]
+  dataset[, X7_mcomisiones_normalizada := ifelse(any(is.na(c(mcomisiones, Media_mcomisiones, SD_mcomisiones))), 0, (mcomisiones - Media_mcomisiones) / SD_mcomisiones)]
   comment <- '
   dataset[, X7_mactivos_margen_normalizada := (mactivos_margen - Media_mactivos_margen) / SD_mactivos_margen]
   dataset[, X7_mpasivos_margen_normalizada := (mpasivos_margen - Media_mpasivos_margen) / SD_mpasivos_margen]
