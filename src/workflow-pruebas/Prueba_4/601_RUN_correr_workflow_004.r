@@ -21,6 +21,7 @@ archivo <- "Tiempo_Script_004.txt"
 # Registra la hora de inicio
 hora_inicio <- Sys.time()
 
+cat("--------------------------------------------------------------\n", file = archivo, append = TRUE)
 cat("Inicia workflow-pruebas -> Prueba_4\n", file = archivo, append = TRUE)
 cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo, append = TRUE)
 
