@@ -11,9 +11,9 @@ require("yaml")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "p03_DR6210"
+PARAM$experimento <- "p03_DR6210_2"
 
-PARAM$exp_input <- "p03_CA6110"
+PARAM$exp_input <- "p03_CA6110_2"
 
 PARAM$variables_intrames <- TRUE # atencion esto esta en TRUE
 
