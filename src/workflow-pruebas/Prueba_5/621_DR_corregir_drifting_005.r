@@ -11,9 +11,9 @@ require("yaml")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "p01_DR6210"
+PARAM$experimento <- "p05_DR6210"
 
-PARAM$exp_input <- "p01_CA6110"
+PARAM$exp_input <- "p05_CA6110"
 
 PARAM$variables_intrames <- TRUE # atencion esto esta en TRUE
 
@@ -130,7 +130,7 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # Aqui debe usted agregar sus propias nuevas variables
 
-
+  # Corrida solo con las variables que entraron en el ranking top 30 de ganancias de todas las semillas. 
 
   #1)-------------------------------------------------------------
   # Sumo todas las cantidades de transacciones y las rankeo. 
@@ -139,131 +139,58 @@ AgregarVariables_IntraMes <- function(dataset) {
   + cpayroll2_trx + ccuenta_debitos_automaticos + cforex + cforex_buy + cforex_sell + ccallcenter_transacciones
   + chomebanking_transacciones + ccajas_transacciones + ccajas_otras + catm_trx + catm_trx_other + ctrx_quarter + cmobile_app_trx]
 
-
-  # Calculo los deciles de la variable Suma_cantidades y creo una nueva columna
-  dataset[, X1_Suma_cantytrans_decil := frank(X1_Suma_cantytrans, ties.method = "first", n.ties = 10)]
-
-  # Elimino la columna Suma_cantidades
-  #dataset[, X1_Suma_cantytrans := NULL]
-
-
+  dataset[, X1_Suma_cantytrans_decil := frankv(X1_Suma_cantytrans, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
   #2)-------------------------------------------------------------
   # Sumo todas las variables segun el movimiento de dinero
 
-  dataset[, X2_balance := (mpayroll + mpayroll2 + mcajeros_propios_descuentos + mtarjeta_visa_descuentos + mtarjeta_master_descuentos 
-  + mtransferencias_recibidas + mcheques_depositados + mcheques_emitidos) -   
-  
-  (mautoservicio + mtarjeta_visa_consumo + mtarjeta_master_consumo + mprestamos_personales + mprestamos_prendarios 
-  + mprestamos_hipotecarios + mcuenta_debitos_automaticos + mtarjeta_visa_debitos_automaticos + mttarjeta_master_debitos_automaticos 
-  + mpagodeservicios + mpagomiscuentas + mcomisiones_mantenimiento + mcomisiones_otras + mtransferencias_emitidas 
-  + mextraccion_autoservicio + Master_mconsumospesos + Master_mconsumosdolares + Master_madelantopesos + Master_madelantodolares 
-  + Master_mpagado + Master_mpagospesos + Master_mpagosdolares + Master_mconsumototal + Visa_mconsumospesos + Visa_mconsumosdolares 
-  + Visa_madelantopesos + Visa_madelantodolares + Visa_mpagado + Visa_mpagospesos + Visa_mpagosdolares + Visa_mconsumototal)]
-
-
   #3)-------------------------------------------------------------
   # Sumo todas las cantidades de transacciones y las rankeo. 
-
-  dataset[, X3_Suma_cantidades := cproductos + ccuenta_corriente + ccaja_ahorro + ctarjeta_debito + ctarjeta_debito_transacciones 
-  + ctarjeta_visa + ctarjeta_visa_transacciones + ctarjeta_master + ctarjeta_master_transacciones + cprestamos_personales 
-  + cprestamos_prendarios + cprestamos_hipotecarios + cplazo_fijo + cinversion1 + cinversion2 + cseguro_vida + cseguro_auto 
-  + cseguro_vivienda + cseguro_accidentes_personales + cpayroll_trx + cpayroll2_trx + ccuenta_debitos_automaticos 
-  + ctarjeta_visa_debitos_automaticos + ctarjeta_master_debitos_automaticos + cpagodeservicios + cpagomiscuentas 
-  + ccajeros_propios_descuentos + ctarjeta_visa_descuentos + ctarjeta_master_descuentos + ccomisiones_mantenimiento 
-  + ccomisiones_otras + cforex + cforex_buy + cforex_sell + ctransferencias_recibidas + ctransferencias_emitidas 
-  + cextraccion_autoservicio + ccheques_depositados + ccheques_emitidos + ccheques_depositados_rechazados 
-  + ccheques_emitidos_rechazados + ccallcenter_transacciones + chomebanking_transacciones + ccajas_transacciones + ccajas_consultas 
-  + ccajas_depositos + ccajas_extracciones + ccajas_otras + catm_trx + catm_trx_other + ctrx_quarter + cmobile_app_trx 
-  + Master_cconsumos + Master_cadelantosefectivo + Visa_cconsumos + Visa_cadelantosefectivo]
-
-
-  # Calculo los deciles de la variable Suma_cantidades y creo una nueva columna
-  dataset[, X3_Suma_cantidades_decil := frank(X3_Suma_cantidades, ties.method = "first", n.ties = 10)]
-
-  # Elimino la columna Suma_cantidades
-  #dataset[, X3_Suma_cantidades := NULL]
-
 
   #4)-------------------------------------------------------------
   # Calculo la relacion entre la edad y la antiguedad del cliente
 
-  dataset[, X4_edad_antiguedad := cliente_antiguedad / (cliente_edad * 12)]
-  dataset[, X4_cliente_edad_decil := frank(cliente_edad, ties.method = "first", n.ties = 10)]
-  dataset[, X4_cliente_antiguedad_decil := frank(cliente_antiguedad, ties.method = "first", n.ties = 10)]
-
   #5)-------------------------------------------------------------
   # Hago un rankeo de las variables de montos y saldos totales: 
-
-  dataset[, X5_mcomisiones_decil := frank(mcomisiones, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mactivos_margen_decil := frank(mactivos_margen, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mpasivos_margen_decil := frank(mpasivos_margen, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcuenta_corriente_adicional_decil := frank(mcuenta_corriente_adicional, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcuenta_corriente_decil := frank(mcuenta_corriente, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcaja_ahorro_decil := frank(mcaja_ahorro, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcaja_ahorro_adicional_decil := frank(mcaja_ahorro_adicional, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcaja_ahorro_dolares_decil := frank(mcaja_ahorro_dolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcuentas_saldo_decil := frank(mcuentas_saldo, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mautoservicio_decil := frank(mautoservicio, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtarjeta_visa_consumo_decil := frank(mtarjeta_visa_consumo, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtarjeta_master_consumo_decil := frank(mtarjeta_master_consumo, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mprestamos_personales_decil := frank(mprestamos_personales, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mprestamos_prendarios_decil := frank(mprestamos_prendarios, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mprestamos_hipotecarios_decil := frank(mprestamos_hipotecarios, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mplazo_fijo_dolares_decil := frank(mplazo_fijo_dolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mplazo_fijo_pesos_decil := frank(mplazo_fijo_pesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_minversion1_pesos_decil := frank(minversion1_pesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_minversion1_dolares_decil := frank(minversion1_dolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_minversion2_decil := frank(minversion2, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mpayroll_decil := frank(mpayroll, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mpayroll2_decil := frank(mpayroll2, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcuenta_debitos_automaticos_decil := frank(mcuenta_debitos_automaticos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtarjeta_visa_debitos_automaticos_decil := frank(mtarjeta_visa_debitos_automaticos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mttarjeta_master_debitos_automaticos_decil := frank(mttarjeta_master_debitos_automaticos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mpagodeservicios_decil := frank(mpagodeservicios, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mpagomiscuentas_decil := frank(mpagomiscuentas, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcajeros_propios_descuentos_decil := frank(mcajeros_propios_descuentos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtarjeta_visa_descuentos_decil := frank(mtarjeta_visa_descuentos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtarjeta_master_descuentos_decil := frank(mtarjeta_master_descuentos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcomisiones_mantenimiento_decil := frank(mcomisiones_mantenimiento, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcomisiones_otras_decil := frank(mcomisiones_otras, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mforex_buy_decil := frank(mforex_buy, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mforex_sell_decil := frank(mforex_sell, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtransferencias_recibidas_decil := frank(mtransferencias_recibidas, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mtransferencias_emitidas_decil := frank(mtransferencias_emitidas, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mextraccion_autoservicio_decil := frank(mextraccion_autoservicio, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcheques_depositados_decil := frank(mcheques_depositados, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcheques_emitidos_decil := frank(mcheques_emitidos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcheques_depositados_rechazados_decil := frank(mcheques_depositados_rechazados, ties.method = "first", n.ties = 10)]
-  dataset[, X5_mcheques_emitidos_rechazados_decil := frank(mcheques_emitidos_rechazados, ties.method = "first", n.ties = 10)]
-  dataset[, X5_matm_decil := frank(matm, ties.method = "first", n.ties = 10)]
-  dataset[, X5_matm_other_decil := frank(matm_other, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_msaldototal_decil := frank(Master_msaldototal, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_msaldopesos_decil := frank(Master_msaldopesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_msaldodolares_decil := frank(Master_msaldodolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_mconsumospesos_decil := frank(Master_mconsumospesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_mconsumosdolares_decil := frank(Master_mconsumosdolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_mpagado_decil := frank(Master_mpagado, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_mpagospesos_decil := frank(Master_mpagospesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_mpagosdolares_decil := frank(Master_mpagosdolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Master_mconsumototal_decil := frank(Master_mconsumototal, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_msaldototal_decil := frank(Visa_msaldototal, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_msaldopesos_decil := frank(Visa_msaldopesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_msaldodolares_decil := frank(Visa_msaldodolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_mconsumospesos_decil := frank(Visa_mconsumospesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_mconsumosdolares_decil := frank(Visa_mconsumosdolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_mpagado_decil := frank(Visa_mpagado, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_mpagospesos_decil := frank(Visa_mpagospesos, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_mpagosdolares_decil := frank(Visa_mpagosdolares, ties.method = "first", n.ties = 10)]
-  dataset[, X5_Visa_mconsumototal_decil := frank(Visa_mconsumototal, ties.method = "first", n.ties = 10)]
+  
+  dataset[, X5_mpasivos_margen_decil := frankv(mpasivos_margen, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcaja_ahorro_decil := frankv(mcaja_ahorro, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcuentas_saldo_decil := frankv(mcuentas_saldo, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mtarjeta_visa_consumo_decil := frankv(mtarjeta_visa_consumo, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mprestamos_personales_decil := frankv(mprestamos_personales, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mpayroll_decil := frankv(mpayroll, ties.method = "dense", na.last = "keep"), by=foto_mes]
+  dataset[, X5_mcomisiones_mantenimiento_decil := frankv(mcomisiones_mantenimiento, ties.method = "dense", na.last = "keep"), by=foto_mes]
 
 
+  #6)-------------------------------------------------------------
+  # Aplico logaritmos a las variables monetarias
+
+  dataset[, X6_Log2_mrentabilidad_annual := ifelse(mrentabilidad_annual > 1, log2(mrentabilidad_annual), mrentabilidad_annual)]
+  dataset[, X6_Log2_mcuenta_corriente_adicional := ifelse(mcuenta_corriente_adicional > 1, log2(mcuenta_corriente_adicional), mcuenta_corriente_adicional)]
+  dataset[, X6_Log2_mcaja_ahorro := ifelse(mcaja_ahorro > 1, log2(mcaja_ahorro), mcaja_ahorro)]
+  dataset[, X6_Log2_mcuentas_saldo := ifelse(mcuentas_saldo > 1, log2(mcuentas_saldo), mcuentas_saldo)]
+  dataset[, X6_Log2_mtarjeta_visa_consumo := ifelse(mtarjeta_visa_consumo > 1, log2(mtarjeta_visa_consumo), mtarjeta_visa_consumo)]
+  dataset[, X6_Log2_mprestamos_personales := ifelse(mprestamos_personales > 1, log2(mprestamos_personales), mprestamos_personales)]
+  dataset[, X6_Log2_mcomisiones_mantenimiento := ifelse(mcomisiones_mantenimiento > 1, log2(mcomisiones_mantenimiento), mcomisiones_mantenimiento)]
+
+  #7)-------------------------------------------------------------
+  # Estandarizo las variables monetarias
+
+  # Calculo la media y la desviación estándar de cada variable monetaria por Mes
+
+  dataset[, Media_mprestamos_personales := mean(mprestamos_personales, na.rm = TRUE), by = foto_mes]
+
+  dataset[, SD_mprestamos_personales := sd(mprestamos_personales, na.rm = TRUE), by = foto_mes]
+
+  # Normalizo las Variables por Mes utilizando la media y desviación estándar
+
+  dataset[, X7_mprestamos_personales_normalizada := ifelse(any(is.na(c(mprestamos_personales, Media_mprestamos_personales, SD_mprestamos_personales))), 0, (mprestamos_personales - Media_mprestamos_personales) / SD_mprestamos_personales)]
+
+  #8)-------------------------------------------------------------
+  # Normalizo las variables monetarias
 
 
-
-
-
-
+  cat("LLego bien!")
 
 
 
