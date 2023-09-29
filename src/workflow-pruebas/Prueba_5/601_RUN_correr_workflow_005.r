@@ -61,6 +61,7 @@ setwd("~/buckets/b1/exp/p05_RUN6010/")
 hora_fin <- Sys.time()
 cat("\n\nhora_fin GMT: ", hora_fin, file = "Tiempo_Script_005.txt", append = TRUE)
 
+comment <- '
 # Calcula la diferencia de tiempo en segundos
 diferencia_segundos <- as.numeric(difftime(hora_fin, hora_inicio, units = "secs"))
 
@@ -72,3 +73,4 @@ segundos <- diferencia_segundos %% 60
 
 # Muestra el tiempo transcurrido
 cat("\n\nTiempo transcurrido workflow-pruebas -> Prueba_5:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = "Tiempo_Script_005.txt", append = TRUE)
+'
