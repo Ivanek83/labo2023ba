@@ -18,7 +18,7 @@ carpeta_prueba <- "p06_RUN6010"
 directorio_base <- paste0("~/buckets/b1/exp/", carpeta_prueba, "/")
 # Asigna directorio_base en el entorno global
 assign("directorio_base", directorio_base, envir = globalenv())
-assign("carpeta_prueba", p06_RUN6010, envir = globalenv())
+assign("p06_RUN6010", carpeta_prueba, envir = globalenv())
 
 
 # creo la carpeta donde va el experimento
