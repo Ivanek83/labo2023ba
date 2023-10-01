@@ -29,6 +29,7 @@ dir.create(directorio_base, showWarnings = FALSE)
 #setwd("~/buckets/b1/exp/p05_RUN6010/")
 setwd(directorio_base)
 
+print(directorio_base)
 
 
 # corrida de cada paso del workflow
@@ -44,7 +45,7 @@ cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo_tiempo, append = TRUE
 cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
 source("~/labo2023ba/src/workflow-zfinales/Prueba_6/611_CA_reparar_dataset_006.r")
 
-print("Aca 1")
+print(directorio_base)
 setwd(directorio_base)
 print("Aca 2")
 cat("\nScript 621_DR - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
