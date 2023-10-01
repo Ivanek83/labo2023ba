@@ -17,9 +17,9 @@ require("lightgbm")
 
 # Parametros del script
 PARAM <- list()
-PARAM$experimento <- "p01_FE6310"
+PARAM$experimento <- "p03_FE6310_2"
 
-PARAM$exp_input <- "p01_DR6210"
+PARAM$exp_input <- "p03_DR6210_2"
 
 PARAM$lag1 <- TRUE
 PARAM$lag2 <- TRUE
@@ -460,7 +460,7 @@ dataset <- fread(dataset_input)
 
 colnames(dataset)[which(!(sapply(dataset, typeof) %in% c("integer", "double")))]
 
-
+cat("463 \n")
 # creo la carpeta donde va el experimento
 dir.create(paste0("./exp/", PARAM$experimento, "/"), showWarnings = FALSE)
 # Establezco el Working Directory DEL EXPERIMENTO
@@ -481,7 +481,7 @@ cols_lagueables <- copy(setdiff(
 #  es MUY  importante esta linea
 setorder(dataset, numero_de_cliente, foto_mes)
 
-
+cat("484 \n")
 if (PARAM$lag1) {
   # creo los campos lags de orden 1
   OUTPUT$lag1$ncol_antes <- ncol(dataset)
@@ -500,7 +500,7 @@ if (PARAM$lag1) {
   GrabarOutput()
 }
 
-
+cat("503 \n")
 cols_lagueables <- intersect(cols_lagueables, colnames(dataset))
 if (PARAM$lag2) {
   # creo los campos lags de orden 2
@@ -520,7 +520,7 @@ if (PARAM$lag2) {
   GrabarOutput()
 }
 
-
+cat("523 \n")
 cols_lagueables <- intersect(cols_lagueables, colnames(dataset))
 if (PARAM$lag3) {
   # creo los campos lags de orden 3
@@ -543,7 +543,7 @@ if (PARAM$lag3) {
 
 #--------------------------------------
 # agrego las tendencias
-
+cat("546 \n")
 # ordeno el dataset por <numero_de_cliente, foto_mes> para poder hacer lags
 #  es MUY  importante esta linea
 setorder(dataset, numero_de_cliente, foto_mes)
@@ -566,7 +566,7 @@ if (PARAM$Tendencias1$run) {
   GrabarOutput()
 }
 
-
+cat("569 \n")
 cols_lagueables <- intersect(cols_lagueables, colnames(dataset))
 if (PARAM$Tendencias2$run) {
   OUTPUT$TendenciasYmuchomas2$ncol_antes <- ncol(dataset)
@@ -587,7 +587,7 @@ if (PARAM$Tendencias2$run) {
 
 #------------------------------------------------------------------------------
 # Agrego variables a partir de las hojas de un Random Forest
-
+cat("590 \n")
 if (PARAM$RandomForest$run) {
   OUTPUT$AgregaVarRandomForest$ncol_antes <- ncol(dataset)
   AgregaVarRandomForest(
@@ -607,7 +607,7 @@ if (PARAM$RandomForest$run) {
 #--------------------------------------------------------------------------
 # Elimino las variables que no son tan importantes en el dataset
 # with great power comes grest responsability
-
+cat("610 \n")
 if (PARAM$CanaritosAsesinos$ratio > 0.0) {
   OUTPUT$CanaritosAsesinos$ncol_antes <- ncol(dataset)
   CanaritosAsesinos(
@@ -619,7 +619,7 @@ if (PARAM$CanaritosAsesinos$ratio > 0.0) {
   OUTPUT$CanaritosAsesinos$ncol_despues <- ncol(dataset)
   GrabarOutput()
 }
-
+cat("grabo el dataset \n")
 #------------------------------------------------------------------------------
 # grabo el dataset
 fwrite(dataset,
@@ -629,7 +629,7 @@ fwrite(dataset,
 )
 
 #------------------------------------------------------------------------------
-
+cat("632 \n")
 # guardo los campos que tiene el dataset
 tb_campos <- as.data.table(list(
   "pos" = 1:ncol(dataset),
@@ -651,7 +651,7 @@ fwrite(tb_campos,
 #------------------------------------------------------------------------------
 OUTPUT$dataset$ncol <- ncol(dataset)
 OUTPUT$dataset$nrow <- nrow(dataset)
-
+cat("654 \n")
 OUTPUT$time$end <- format(Sys.time(), "%Y%m%d %H%M%S")
 GrabarOutput()
 
@@ -660,3 +660,4 @@ cat(format(Sys.time(), "%Y%m%d %H%M%S"), "\n",
   file = "zRend.txt",
   append = TRUE
 )
+cat("FINAL \n")

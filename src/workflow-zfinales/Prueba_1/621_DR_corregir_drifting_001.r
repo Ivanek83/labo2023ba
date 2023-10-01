@@ -130,6 +130,11 @@ AgregarVariables_IntraMes <- function(dataset) {
 
   # Aqui debe usted agregar sus propias nuevas variables
 
+
+
+
+
+
   # valvula de seguridad para evitar valores infinitos
   # paso los infinitos a NULOS
   infinitos <- lapply(
