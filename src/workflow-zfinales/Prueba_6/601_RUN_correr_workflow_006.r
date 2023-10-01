@@ -44,7 +44,9 @@ cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo_tiempo, append = TRUE
 cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
 source("~/labo2023ba/src/workflow-zfinales/Prueba_6/611_CA_reparar_dataset_006.r")
 
+print("Aca 1")
 setwd(directorio_base)
+print("Aca 2")
 cat("\nScript 621_DR - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
 source("~/labo2023ba/src/workflow-zfinales/Prueba_6/621_DR_corregir_drifting_006.r")
 
