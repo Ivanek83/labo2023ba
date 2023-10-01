@@ -30,38 +30,38 @@ setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
 hora_inicio <- Sys.time()
 
 cat("------------------------------------------\n", file = archivo_tiempo, append = TRUE)
-cat("Inicia workflow-pruebas -> Prueba_6\n", file = archivo_tiempo, append = TRUE)
+cat("Inicia workflow-zfinales -> Prueba_6\n", file = archivo_tiempo, append = TRUE)
 cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo_tiempo, append = TRUE)
 
 # primeros pasos, relativamente rapidos
 
 cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_6/611_CA_reparar_dataset_006.r")
+source("~/labo2023ba/src/workflow-zfinales/Prueba_6/611_CA_reparar_dataset_006.r")
 
 setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
 cat("\nScript 621_DR - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_6/621_DR_corregir_drifting_006.r")
+source("~/labo2023ba/src/workflow-zfinales/Prueba_6/621_DR_corregir_drifting_006.r")
 
 
 comment <- '
 setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
 cat("\nScript 631_FE - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_6/631_FE_historia_006.r")
+source("~/labo2023ba/src/workflow-zfinales/Prueba_6/631_FE_historia_006.r")
 
 setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
 cat("\nScript 641_TS - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_6/641_TS_training_strategy_006.r")
+source("~/labo2023ba/src/workflow-zfinales/Prueba_6/641_TS_training_strategy_006.r")
 
 
 # ultimos pasos, muy lentos
 
 setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
 cat("\nScript: 651_HT - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_6/651_HT_lightgbm_006.r")
+source("~/labo2023ba/src/workflow-zfinales/Prueba_6/651_HT_lightgbm_006.r")
 
 setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
 cat("\nScript 661_ZZ - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-pruebas/Prueba_6/661_ZZ_final_006.r")
+source("~/labo2023ba/src/workflow-zfinales/Prueba_6/661_ZZ_final_006.r")
 
 '
 
@@ -83,4 +83,4 @@ minutos <- floor((diferencia_segundos %% 3600) / 60)
 segundos <- diferencia_segundos %% 60
 
 # Muestra el tiempo transcurrido
-cat("\n\nTiempo transcurrido workflow-pruebas -> Prueba_6:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = archivo_tiempo, append = TRUE)
+cat("\n\nTiempo transcurrido workflow-zfinales -> Prueba_6:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = archivo_tiempo, append = TRUE)
