@@ -8,83 +8,60 @@ options(error = function() {
 })
 
 
-# Variables globales
-archivo_tiempo <- "Tiempo_Script_006.txt"
-carpeta_prueba <- "p06_RUN6010"
-# Prueba_6
-# _006
-
-
-directorio_base <- paste0("~/buckets/b1/exp/", carpeta_prueba, "/")
-# Asigna directorio_base en el entorno global
-assign("directorio_base", directorio_base, envir = globalenv())
-assign("p06_RUN6010", carpeta_prueba, envir = globalenv())
-
 
 # creo la carpeta donde va el experimento
-#dir.create("~/buckets/b1/exp/p05_RUN6010/", showWarnings = FALSE)
-dir.create(directorio_base, showWarnings = FALSE)
-
-
+dir.create("~/buckets/b1/exp/p06_RUN6010/", showWarnings = FALSE)
 # Establezco el Working Directory DEL EXPERIMENTO
-#setwd("~/buckets/b1/exp/p05_RUN6010/")
-setwd(directorio_base)
+setwd("~/buckets/b1/exp/p06_RUN6010/")
 
-print(directorio_base)
 
 
 # corrida de cada paso del workflow
 # Registra la hora de inicio
 hora_inicio <- Sys.time()
 
-cat("------------------------------------------\n", file = archivo_tiempo, append = TRUE)
-cat("Inicia workflow-zfinales -> Prueba_6\n", file = archivo_tiempo, append = TRUE)
-cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo_tiempo, append = TRUE)
+cat("------------------------------------------\n", file = "Tiempo_Script_006.txt", append = TRUE)
+cat("Inicia workflow-pruebas -> Prueba_6\n", file = "Tiempo_Script_006.txt", append = TRUE)
+cat("hora_inicio GMT: ", hora_inicio, "\n", file = "Tiempo_Script_006.txt", append = TRUE)
 
 # primeros pasos, relativamente rapidos
 
-cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-zfinales/Prueba_6/611_CA_reparar_dataset_006.r")
+cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script_006.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_6/611_CA_reparar_dataset_006.r")
 
-directorio_base <- paste0("~/buckets/b1/exp/", carpeta_prueba, "/")
+setwd("~/buckets/b1/exp/p06_RUN6010/")
+cat("\nScript 621_DR - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script_006.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_6/621_DR_corregir_drifting_006.r")
 
-print(directorio_base)
-setwd(directorio_base)
-print("Aca 2")
-cat("\nScript 621_DR - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-zfinales/Prueba_6/621_DR_corregir_drifting_006.r")
+setwd("~/buckets/b1/exp/p06_RUN6010/")
+cat("\nScript 631_FE - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script_006.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_6/631_FE_historia_006.r")
 
-
-comment <- '
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
-cat("\nScript 631_FE - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-zfinales/Prueba_6/631_FE_historia_006.r")
-
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
-cat("\nScript 641_TS - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-zfinales/Prueba_6/641_TS_training_strategy_006.r")
+setwd("~/buckets/b1/exp/p06_RUN6010/")
+cat("\nScript 641_TS - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script_006.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_6/641_TS_training_strategy_006.r")
 
 
 # ultimos pasos, muy lentos
 
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
-cat("\nScript: 651_HT - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-zfinales/Prueba_6/651_HT_lightgbm_006.r")
+setwd("~/buckets/b1/exp/p06_RUN6010/")
+cat("\nScript: 651_HT - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script_006.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_6/651_HT_lightgbm_006.r")
 
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
-cat("\nScript 661_ZZ - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
-source("~/labo2023ba/src/workflow-zfinales/Prueba_6/661_ZZ_final_006.r")
-
-'
+setwd("~/buckets/b1/exp/p06_RUN6010/")
+cat("\nScript 661_ZZ - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = "Tiempo_Script_006.txt", append = TRUE)
+source("~/labo2023ba/src/workflow-pruebas/Prueba_6/661_ZZ_final_006.r")
 
 
 
-setwd(directorio_base)
+
+
+setwd("~/buckets/b1/exp/p06_RUN6010/")
 # Registra la hora de finalización
 hora_fin <- Sys.time()
-cat("\n\nhora_fin GMT: ", hora_fin, file = archivo_tiempo, append = TRUE)
+cat("\n\nhora_fin GMT: ", hora_fin, file = "Tiempo_Script_006.txt", append = TRUE)
 
-
+comment <- '
 # Calcula la diferencia de tiempo en segundos
 diferencia_segundos <- as.numeric(difftime(hora_fin, hora_inicio, units = "secs"))
 
@@ -95,4 +72,5 @@ minutos <- floor((diferencia_segundos %% 3600) / 60)
 segundos <- diferencia_segundos %% 60
 
 # Muestra el tiempo transcurrido
-cat("\n\nTiempo transcurrido workflow-zfinales -> Prueba_6:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = archivo_tiempo, append = TRUE)
+cat("\n\nTiempo transcurrido workflow-pruebas -> Prueba_6:", dias, "días,", horas, "horas,", minutos, "minutos,", segundos, "segundos\n", file = "Tiempo_Script_006.txt", append = TRUE)
+'
