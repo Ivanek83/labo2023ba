@@ -15,14 +15,16 @@ carpeta_prueba <- "p06_RUN6010"
 # _006
 
 
+directorio_base <- paste0("~/buckets/b1/exp/", carpeta_prueba, "/")
 # creo la carpeta donde va el experimento
 #dir.create("~/buckets/b1/exp/p05_RUN6010/", showWarnings = FALSE)
-dir.create(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"), showWarnings = FALSE)
+dir.create(directorio_base, showWarnings = FALSE)
 
 
 # Establezco el Working Directory DEL EXPERIMENTO
 #setwd("~/buckets/b1/exp/p05_RUN6010/")
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
+setwd(directorio_base)
+
 
 
 # corrida de cada paso del workflow
@@ -38,7 +40,7 @@ cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo_tiempo, append = TRUE
 cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
 source("~/labo2023ba/src/workflow-zfinales/Prueba_6/611_CA_reparar_dataset_006.r")
 
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
+setwd(directorio_base)
 cat("\nScript 621_DR - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
 source("~/labo2023ba/src/workflow-zfinales/Prueba_6/621_DR_corregir_drifting_006.r")
 
@@ -67,7 +69,7 @@ source("~/labo2023ba/src/workflow-zfinales/Prueba_6/661_ZZ_final_006.r")
 
 
 
-setwd(paste0("~/buckets/b1/exp/", carpeta_prueba, "/"))
+setwd(directorio_base)
 # Registra la hora de finalización
 hora_fin <- Sys.time()
 cat("\n\nhora_fin GMT: ", hora_fin, file = archivo_tiempo, append = TRUE)
