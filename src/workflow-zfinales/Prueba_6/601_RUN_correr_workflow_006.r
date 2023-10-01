@@ -18,6 +18,7 @@ carpeta_prueba <- "p06_RUN6010"
 directorio_base <- paste0("~/buckets/b1/exp/", carpeta_prueba, "/")
 # Asigna directorio_base en el entorno global
 assign("directorio_base", directorio_base, envir = globalenv())
+assign("carpeta_prueba", p06_RUN6010, envir = globalenv())
 
 
 # creo la carpeta donde va el experimento
@@ -44,6 +45,8 @@ cat("hora_inicio GMT: ", hora_inicio, "\n", file = archivo_tiempo, append = TRUE
 
 cat("\nScript 611_CA - Hora de inicio GMT: ", strftime(Sys.time(), format = "%Y-%m-%d %H:%M:%S"), "\n", file = archivo_tiempo, append = TRUE)
 source("~/labo2023ba/src/workflow-zfinales/Prueba_6/611_CA_reparar_dataset_006.r")
+
+directorio_base <- paste0("~/buckets/b1/exp/", carpeta_prueba, "/")
 
 print(directorio_base)
 setwd(directorio_base)
