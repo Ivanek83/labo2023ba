@@ -45,8 +45,8 @@ PARAM$modelos_rank <- c(1)
 # reemplazar por las propias semillas
 PARAM$semillas <- c(124541, 203663, 365567, 449437, 565057, 600037, 600043, 600073, 600091, 600101)
 
-PARAM$kaggle$envios_desde <- 9800L
-PARAM$kaggle$envios_hasta <- 10200L
+PARAM$kaggle$envios_desde <- 9700L
+PARAM$kaggle$envios_hasta <- 10300L
 PARAM$kaggle$envios_salto <- 100L
 
 # para el caso que deba graficar
